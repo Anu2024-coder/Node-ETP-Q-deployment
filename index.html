@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Socket.IO Chat</title>
+    <style>
+        body { font-family: Arial; }
+        #messages { border: 1px solid black; height: 200px; overflow-y: scroll; }
+    </style>
+</head>
+<body>
+
+<h2>Real-Time Chat</h2>
+
+<input id="username" placeholder="Enter name">
+<button onclick="joinChat()">Join</button>
+<br><br>
+
+<div id="messages"></div>
+<br>
+
+<input id="msg" placeholder="Enter message">
+<button onclick="sendMsg()">Send</button>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const socket = io();
+
+    function joinChat() {
+        const name = document.getElementById("username").value;
+        socket.emit("join", name);
+    }
+
+    function sendMsg() {
+        const msg = document.getElementById("msg").value;
+        socket.emit("message", msg);
+        document.getElementById("msg").value = "";
+    }
+
+    socket.on("message", (data) => {
+        const div = document.getElementById("messages");
+        div.innerHTML += `<p><b>${data.user}:</b> ${data.text}</p>`;
+    });
+
+    socket.on("notification", (msg) => {
+        const div = document.getElementById("messages");
+        div.innerHTML += `<p><i>${msg}</i></p>`;
+    });
+</script>
+
+</body>
+</html>
