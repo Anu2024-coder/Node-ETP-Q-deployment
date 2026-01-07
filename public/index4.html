@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket.io Even Visitors</title>
+</head>
+<body>
+    <h2>Socket.io Client</h2>
+    <h3 id="count">Waiting for even visitor count...</h3>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket=io();
+        socket.on("currentCount", (count) => {
+    console.log("Current Count:", count);
+  });
+  
+        socket.on("evenVisitors",(count)=>{
+            document.getElementById("count").innerText="Even visitor count: "+count;
+        });
+    </script>
+</body>
+</html>
