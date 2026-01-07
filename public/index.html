@@ -3,15 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>File download</title>
+    <title>Socket.io Even Visitors</title>
 </head>
 <body>
-    <h2>Download student file</h2>
-    <form action="/download" method="POST">
-        <label>Enter file name:</label>
-        <input type="text" name="filename" placeholder="students.txt" required>
-        <br><br>
-        <button type="submit">Download file</button>
-    </form>
+    <h2>Socket.io Client</h2>
+    <h3 id="count">Waiting for even visitor count...</h3>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket=io();
+        socket.on("currentCount", (count) => {
+    console.log("Current Count:", count);
+  });
+  
+        socket.on("evenVisitors",(count)=>{
+            document.getElementById("count").innerText="Even visitor count: "+count;
+        });
+    </script>
 </body>
 </html>
